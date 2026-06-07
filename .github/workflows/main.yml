@@ -1,0 +1,19 @@
+cat > .github/workflows/main.yml << 'EOF'
+name: PHP CI
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: Install deps
+        run: cd backend && composer install --no-dev
+      - name: PHP Syntax Check
+        run: find backend -name "*.php" -exec php -l {} \;
+EOF
