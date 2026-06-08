@@ -7,8 +7,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install PHP
+        run: sudo apt-get update && sudo apt-get install -y php-cli
+
       - name: PHP Syntax Check
-        run: find. -name "*.php" -exec php -l {} \;
+        run: find. -name "*.php" -print0 | xargs -0 -n1 php -l
 
       - name: Success Message
         run: echo "Bhai saara PHP code clean hai! ✅"
