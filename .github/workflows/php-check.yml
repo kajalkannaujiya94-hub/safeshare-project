@@ -1,0 +1,14 @@
+name: PHP Syntax Check
+on: [push]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: PHP Syntax Check
+        run: find. -name "*.php" -exec php -l {} \;
+
+      - name: Success Message
+        run: echo "Bhai saara PHP code clean hai! ✅"
