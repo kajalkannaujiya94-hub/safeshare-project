@@ -5,7 +5,8 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -22,3 +23,6 @@ jobs:
 
       - name: Success Message
         run: echo "Bhai AWS login + PHP check dono ho gaye! ✅"
+
+      - name: Create S3 Bucket
+        run: aws s3 mb s3://safeshare-kajal-$(date +%s) --region ap-south-1
