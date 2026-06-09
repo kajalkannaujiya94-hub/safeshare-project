@@ -1,4 +1,4 @@
-name: PHP Syntax Check
+name: PHP Syntax Check + S3 Upload
 on: [push]
 
 jobs:
@@ -21,8 +21,11 @@ jobs:
       - name: PHP Syntax Check
         run: find. -name "*.php" -print0 | xargs -0 -n1 php -l
 
-      - name: Success Message
-        run: echo "Bhai AWS login + PHP check dono ho gaye! ✅"
-
       - name: Create S3 Bucket
         run: aws s3 mb s3://safeshare-kajal-$(date +%s) --region ap-south-1
+
+      - name: Create Test File
+        run: echo "<h1>SafeShare by Kajal - Day 5 ✅</h1><p>Robot ne upload kar diya!</p>" > index.html
+
+      - name: Upload to S3
+        run: aws s3 cp index.html s3://$(aws s3 ls | grep safeshare-kajal | tail -n1 | awk '{print $3}')/ --region ap-south-1
